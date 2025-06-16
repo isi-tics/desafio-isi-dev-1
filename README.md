@@ -416,8 +416,8 @@ Exemplo de patch:
 
 ```json
 [
-  { "op": "replace", "path": "/stock", "value": 300 },
-  { "op": "replace", "path": "/price", "value": 2790 }
+  { "op": "replace", "path": "/stock", "value": 300 },
+  { "op": "replace", "path": "/price", "value": 2790 }
 ]
 ```
 
@@ -434,15 +434,17 @@ Exemplo de patch:
 #### Modelo de cupom
 
 ```json
-{  
-  "code": "promo10",  
-  "type": "percent",  
-  "value": 10,  
-  "oneShot": false,  
-  "validFrom": "2025-06-01T00:00:00Z",  
-  "validUntil": "2027-06-01T00:00:00Z"
+{
+  "code": "promo10",
+  "type": "percent",
+  "value": 10,
+  "oneShot": false,
+  "validFrom": "2025-06-01T00:00:00Z",
+  "validUntil": "2027-06-01T00:00:00Z"
 }
 ```
+
+
 
 #### Validações
 

@@ -445,6 +445,7 @@ Exemplo de patch:
 ```
 
 
+
 #### Validações
 
 - O campo `code` deve ser **único** após **normalização** (remoção de acentos, conversão para lowercase e remoção de espaços).

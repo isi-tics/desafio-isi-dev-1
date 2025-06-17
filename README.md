@@ -104,10 +104,11 @@ A proposta visa não apenas testar a sua capacidade técnica e organização de 
 - **Tipo:** Relacional em memória
 - **Exemplo:** SQLite utilizando `':memory:'` como caminho para rodar totalmente em memória.
 
-  **Alternativas Aceitas:**
-  - H2 ou HSQLDB (para implementações em Java)
-  - [better-sqlite3](https://github.com/WiseLibs/better-sqlite3) no Node.js (com suporte a `':memory:'`)
-  - Qualquer outro banco relacional leve, desde que mantenha a persistência temporária ou fixa (Postgres, MYSQL) e seja fácil de configurar para fins de teste e demonstração.
+**Alternativas Aceitas:**
+
+- **H2** ou **HSQLDB** (para implementações em Java)  
+- [`better-sqlite3`](https://github.com/WiseLibs/better-sqlite3) no Node.js (com suporte a `':memory:'`)  
+- Qualquer outro banco relacional leve, desde que mantenha a **persistência temporária ou fixa** (Postgres, MySQL) e seja fácil de configurar para fins de teste e demonstração
 
 ## Backend
 

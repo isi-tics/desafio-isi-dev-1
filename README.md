@@ -1,6 +1,5 @@
 # 💻 Desafio Técnico – Desenvolvedor Fullstack Júnior
 
-
 O Instituto Senai de Inovação está em busca de **desenvolvedores com perfil versátil**, capazes de atuar tanto no **backend quanto no frontend**, para resolver desafios reais e relevantes.  
 Este desafio faz parte do nosso processo seletivo para a vaga de **Desenvolvedor Fullstack Júnior**.
 
@@ -32,7 +31,6 @@ Mais do que domínio técnico, valorizamos a **capacidade de pensar de forma est
 
 ---
 
-
 ## O que será avaliado
 
 | Critério                                      | Peso    |
@@ -61,10 +59,9 @@ Você será responsável por desenvolver uma aplicação web fullstack, contempl
   - Manipulação indevida de estado
   - Ausência de controle transacional
 
-
 A proposta visa não apenas testar a sua capacidade técnica e organização de projeto, mas também avaliar sua sensibilidade às regras de negócio, tratamento de exceções e comportamento frente a requisitos ambíguos ou propensos a falhas. Essa simulação aproxima-se dos desafios enfrentados por times de desenvolvimento que lidam com fluxos reais de negócio em empresas que prezam pela confiabilidade e manutenção da lógica da aplicação ao longo do tempo.
 
-## 🧭 Stack Mínima Sugerida
+##  🧭 Stack Mínima Sugerida
 
 ### Backend
 
@@ -102,8 +99,8 @@ A proposta visa não apenas testar a sua capacidade técnica e organização de 
 - **Outras Bibliotecas/Frameworks:**  
   Frameworks modernos como Vue.js ou Angular também são aceitos, desde que respeitem a arquitetura proposta e cumpram todos os requisitos funcionais com clareza.
 
+###   Banco de Dados
 
-###  Banco de Dados
 - **Tipo:** Relacional em memória
 - **Exemplo:** SQLite utilizando `':memory:'` como caminho para rodar totalmente em memória.
 
@@ -112,8 +109,8 @@ A proposta visa não apenas testar a sua capacidade técnica e organização de 
   - [better-sqlite3](https://github.com/WiseLibs/better-sqlite3) no Node.js (com suporte a `':memory:'`)
   - Qualquer outro banco relacional leve, desde que mantenha a persistência temporária ou fixa (Postgres, MYSQL) e seja fácil de configurar para fins de teste e demonstração.
 
-
 ## Backend
+
 ### Módulo: Produtos e Descontos
 
 Você deverá criar:
@@ -171,7 +168,6 @@ Os seguintes parâmetros podem ser utilizados para refinar a listagem de produto
 - **`onlyOutOfStock`** (`boolean`): se `true`, retorna apenas produtos com estoque igual a zero.
 - **`withCouponApplied`** (`boolean`): se `true`, retorna apenas produtos que possuem cupom promocional aplicado.
 
-
 #### Requisitos Adicionais
 
 - Garantir que a ordenação por **nome**, **preço** e **estoque** seja suportada em ambas as direções (`asc` e `desc`).
@@ -185,52 +181,50 @@ O cadastro de produtos deve ser feito com especial atenção às validações de
 
 #### Campos obrigatórios
 
-* **`name`** (string, obrigatório)  
-  * Deve ser único após normalização (remover acentos, converter para lowercase, remover espaços duplicados)  
-  * Mínimo: 3 caracteres  
-  * Máximo: 100 caracteres  
-  * Regex recomendado: `^[a-zA-Z0-9\s\-_,.]+$`  
+- **`name`** (string, obrigatório)  
+  - Deve ser único após normalização (remover acentos, converter para lowercase, remover espaços duplicados)  
+  - Mínimo: 3 caracteres  
+  - Máximo: 100 caracteres  
+  - Regex recomendado: `^[a-zA-Z0-9\s\-_,.]+$`  
 
-* **`description`** (string, opcional)  
-  * Máximo: 300 caracteres  
+- **`description`** (string, opcional)  
+  - Máximo: 300 caracteres  
 
-* **`stock`** (integer, obrigatório)  
-  * Valor mínimo: 0  
-  * Valor máximo: 999999  
+- **`stock`** (integer, obrigatório)  
+  - Valor mínimo: 0  
+  - Valor máximo: 999999  
 
-* **`price`** (decimal, obrigatório)  
-  * Mínimo: 0.01  
-  * Máximo: 1.000.000,00  
-  * Deve aceitar formatos brasileiros (ex: "1.234,56") e internacionais (ex: 1234.56), mas ser persistido corretamente como decimal  
+- **`price`** (decimal, obrigatório)  
+  - Mínimo: 0.01  
+  - Máximo: 1.000.000,00  
+  - Deve aceitar formatos brasileiros (ex: "1.234,56") e internacionais (ex: 1234.56), mas ser persistido corretamente como decimal  
 
-* **`created_at`** (ISODate, obrigatório)  
-  * Deve ser preenchido com a data/hora atual no momento do cadastro  
-  * Deve ser imutável após criação  
-  * Deve estar no passado ou presente (nunca no futuro)
-
+- **`created_at`** (ISODate, obrigatório)  
+  - Deve ser preenchido com a data/hora atual no momento do cadastro  
+  - Deve ser imutável após criação  
+  - Deve estar no passado ou presente (nunca no futuro)
 
 #### Regras obrigatórias
 
-* O campo **`name`** deve ser único no banco mesmo após normalização.  
-* Produtos com **`stock == 0`** devem ser destacados na listagem com um badge visual **"Esgotado"**.  
-* O valor original nunca deve ser alterado por descontos. Os **descontos devem ser armazenados separadamente**.  
-* O **valor com desconto** (se houver) deve ser sempre **recalculado dinamicamente** e **não salvo** de forma persistente no banco.  
-* É proibido criar produtos com o **preço com desconto menor que R$ 0,01**.  
-* O campo **`created_at`** deve refletir corretamente a **data/hora da criação** e **não pode ser editado posteriormente**.  
-* Adicionar o campo **`updated_at`** para rastrear modificações (**opcional, mas recomendado**).
-
+- O campo **`name`** deve ser único no banco mesmo após normalização.  
+- Produtos com **`stock == 0`** devem ser destacados na listagem com um badge visual **"Esgotado"**.  
+- O valor original nunca deve ser alterado por descontos. Os **descontos devem ser armazenados separadamente**.  
+- O **valor com desconto** (se houver) deve ser sempre **recalculado dinamicamente** e **não salvo** de forma persistente no banco.  
+- É proibido criar produtos com o **preço com desconto menor que R$ 0,01**.  
+- O campo **`created_at`** deve refletir corretamente a **data/hora da criação** e **não pode ser editado posteriormente**.  
+- Adicionar o campo **`updated_at`** para rastrear modificações (**opcional, mas recomendado**).
 
 ### Aplicação de Descontos
 
 #### Tipos permitidos
 
-* **Desconto percentual direto:**  
+- **Desconto percentual direto:**  
   O produto pode receber um **desconto percentual**, aplicado diretamente sobre o valor original.  
   - O valor do desconto deve estar entre **1% e 80%**.  
   - O cálculo do valor final deve ser feito de forma dinâmica no momento da exibição da tabela.  
   - Este tipo de desconto não requer código promocional e é aplicado automaticamente conforme regras do sistema (ex: campanhas sazonais, queima de estoque etc.).
 
-* **Cupom promocional:**  
+- **Cupom promocional:**  
   O sistema deve permitir a aplicação de **cupons promocionais**, que podem ser de dois tipos:  
   - **Valor fixo** (ex: R$ 50 de desconto)  
   - **Percentual** (ex: 10%, 25% etc.)
@@ -242,7 +236,6 @@ O cadastro de produtos deve ser feito com especial atenção às validações de
   - Aplicação dinâmica no checkout, sem persistência do valor com desconto.
 
   > ⚠️ É responsabilidade do sistema validar se o cupom é válido, aplicável ao produto, e se respeita os limites mínimos de valor final (por exemplo, não permitir que o produto fique abaixo de R$ 0,01).
-
 
 #### Regras
 
@@ -280,7 +273,6 @@ O cadastro de produtos deve ser feito com especial atenção às validações de
     - O valor de **`valid_until` deve ser maior que `valid_from`**  
     - A validade máxima permitida para cupons é de **5 anos** a partir de `valid_from`
 
-
 #### Regras adicionais
 
 - O **código do cupom** aplicado deve ser armazenado junto ao produto, em um campo específico chamado **`applied_at`**, que registra a **data/hora exata da aplicação** do cupom.
@@ -296,15 +288,13 @@ O cadastro de produtos deve ser feito com especial atenção às validações de
 - A **remoção de um desconto** (cancelamento ou expiração) deve **restaurar automaticamente o valor original** do produto na exibição.  
   Importante: o campo **`price`** deve **sempre manter o valor original** do produto, o valor com desconto nunca deve ser salvo diretamente nesse campo.
 
-
 ## Documentação dos principais endpoints
 
 > ⚠️ Esta documentação apresenta uma **sugestão de estrutura para os endpoints da API**.  
 > Ela serve como base para implementação e validação dos requisitos funcionais descritos no desafio.  
 > Adaptações podem ser feitas conforme a arquitetura adotada, desde que respeitem os princípios RESTful e garantam clareza e consistência no uso da API.
 
-
-Base URL: `/api/v1` 
+Base URL: `/api/v1`
 Todos os exemplos usam JSON. Datas em ISO-8601 (UTC).
 
 ### 2.1 Produtos
@@ -377,10 +367,11 @@ Exemplo de Resposta 200
   }
 }
 ```
+
 ##### Observações
 
-* `discount` deve ser `null` quando não houver desconto ativo ou se o desconto estiver expirado.
-* Produtos inativos só devem aparecer na listagem se o parâmetro `includeDeleted=true` for utilizado.
+- `discount` deve ser `null` quando não houver desconto ativo ou se o desconto estiver expirado.
+- Produtos inativos só devem aparecer na listagem se o parâmetro `includeDeleted=true` for utilizado.
 
 #### 2.1.2 POST /products
 
@@ -398,14 +389,12 @@ Content-Type: application/json
 }
 ```
 
-
 Cria produto e devolve cabeçalho `Location: /products/{id}`.
 
 **Erros**
 
-* `400 Bad Request` – Corpo da requisição inválido, falha na regex, preço negativo, campo `created_at` com data futura, entre outros erros de validação.
-* `409 Conflict` – Nome duplicado no banco de dados após normalização (remoção de acentos, espaços extras, conversão para lowercase).
-
+- `400 Bad Request` – Corpo da requisição inválido, falha na regex, preço negativo, campo `created_at` com data futura, entre outros erros de validação.
+- `409 Conflict` – Nome duplicado no banco de dados após normalização (remoção de acentos, espaços extras, conversão para lowercase).
 
 #### 2.1.3 PATCH /products/{id}
 
@@ -444,8 +433,6 @@ Exemplo de patch:
 }
 ```
 
-
-
 #### Validações
 
 - O campo `code` deve ser **único** após **normalização** (remoção de acentos, conversão para lowercase e remoção de espaços).
@@ -454,7 +441,6 @@ Exemplo de patch:
   - Para `type = "percent"`: valor entre **1 e 80**.
   - Para `type = "fixed"`: valor **monetário positivo** (maior que 0).
 - O campo `validUntil` deve ser uma data **posterior a `validFrom`** e com no máximo **5 anos de diferença** entre elas.
-
 
 ### 2.3 Códigos de erro globais
 
@@ -470,7 +456,7 @@ Exemplo de patch:
 
 A modelagem relacional proposta inclui três tabelas principais:
 
-###  `products` (Produtos)
+###   `products` (Produtos)
 
 | Campo         | Tipo     | Descrição                                |
 |---------------|----------|------------------------------------------|
@@ -482,7 +468,7 @@ A modelagem relacional proposta inclui três tabelas principais:
 
 ---
 
-###  `coupons` (Cupons de Desconto)
+###   `coupons` (Cupons de Desconto)
 
 | Campo           | Tipo     | Descrição                                                                 |
 |-----------------|----------|--------------------------------------------------------------------------|
@@ -517,8 +503,6 @@ Essa estrutura garante o controle transacional da aplicação e remoção de des
 - A tentativa de aplicar um novo cupom enquanto outro estiver ativo deve resultar em **erro `409 Conflict`**.
 - A aplicação e remoção devem ocorrer de forma **transacional**, garantindo consistência.
 - Após remoção, o sistema deve exibir o valor original (`price`) do produto, sem alterar permanentemente seu valor base.
-
-
 
 ## Fluxo Ideal de Uso: Cadastro de Produto com Cupom e Remoção de Desconto
 
@@ -585,7 +569,6 @@ sequenceDiagram
 
 > 💡 Os passos de 2 a 5 podem ser encapsulados em uma mesma transação caso seja necessário garantir **consistência transacional**.
 
-
 ## Frontend
 
 A interface do sistema deve ser desenvolvida com base no **mockup de referência** apresentado abaixo.  
@@ -594,14 +577,14 @@ Embora **não seja necessário seguir o design com precisão pixel a pixel**, es
 Você tem **total liberdade para escolher a biblioteca ou framework de frontend** que preferir.  
 Será dada preferência para implementações em [ReactJS](https://react.dev), mas qualquer solução moderna que atenda aos requisitos funcionais será aceita.
 
-### Exemplos de bibliotecas e frameworks aceitos:
+### Exemplos de bibliotecas e frameworks aceitos
 
 - [ReactJS](https://react.dev)
 - [Next.js](https://nextjs.org)
 - [Remix](https://remix.run)
 - [Vue.js](https://vuejs.org)
 
-### Exemplos de bibliotecas de UI e estilização:
+### Exemplos de bibliotecas de UI e estilização
 
 - [TailwindCSS](https://tailwindcss.com)
 - [Shadcn/UI](https://ui.shadcn.com)
@@ -610,7 +593,7 @@ Será dada preferência para implementações em [ReactJS](https://react.dev), m
 - [Bootstrap](https://getbootstrap.com)
 - CSS tradicional, SCSS, ou soluções CSS-in-JS como [styled-components](https://styled-components.com) e [Emotion](https://emotion.sh)
 
-### Bibliotecas de gerenciamento de estado (opcionais):
+### Bibliotecas de gerenciamento de estado (opcionais)
 
 Você pode utilizar qualquer biblioteca para gerenciar o estado da aplicação, conforme sua familiaridade ou necessidade do projeto. Exemplos:
 
@@ -620,7 +603,7 @@ Você pode utilizar qualquer biblioteca para gerenciar o estado da aplicação, 
 - [Recoil](https://recoiljs.org)
 - [Context API (nativo do React)](https://react.dev/learn/passing-data-deeply-with-context)
 
-### Bibliotecas auxiliares (opcionais):
+### Bibliotecas auxiliares (opcionais)
 
 É permitido o uso de bibliotecas que otimizem a manipulação de formulários, chamadas assíncronas e validações, desde que **seu uso seja justificado** tecnicamente no projeto. Exemplos:
 
@@ -667,8 +650,7 @@ A aplicação deve conter, no mínimo, as seguintes funcionalidades implementada
   - Disponível na interface do produto
   - Deve refletir a alteração imediatamente na listagem e/ou na visualização de detalhes
 
-
-### 📐 **Mockup de Interface no Figma** 
+### 📐 **Mockup de Interface no Figma**
 
 Para acessar o mockup de interface do usuário, utilize o link abaixo.
 
@@ -691,7 +673,6 @@ O `README.md` deve conter os seguintes tópicos:
 3. **Tecnologias utilizadas**
    - Informar as bibliotecas e frameworks principais utilizados
    - Exemplos esperados: `ReactJS`, `TailwindCSS`, `Axios`, `NestJS`, `Prisma`
-
 
 ---
 

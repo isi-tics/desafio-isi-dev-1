@@ -53,11 +53,6 @@ Você será responsável por desenvolver uma aplicação web fullstack, contempl
 - Cadastro de produtos com controle de **preço**, **estoque** e **unicidade de nome**
 - Listagem de produtos com **filtros avançados** e **paginação**
 - Aplicação e remoção de **descontos percentuais** ou **cupons promocionais**, seguindo regras específicas de negócio
-- Edição parcial dos dados dos produtos utilizando **controle de concorrência** e **versionamento**
-- Validações robustas que simulam **erros comuns de iniciantes**, incluindo:
-  - Conflitos lógicos
-  - Manipulação indevida de estado
-  - Ausência de controle transacional
 
 A proposta visa não apenas testar a sua capacidade técnica e organização de projeto, mas também avaliar sua sensibilidade às regras de negócio, tratamento de exceções e comportamento frente a requisitos ambíguos ou propensos a falhas. Essa simulação aproxima-se dos desafios enfrentados por times de desenvolvimento que lidam com fluxos reais de negócio em empresas que prezam pela confiabilidade e manutenção da lógica da aplicação ao longo do tempo.
 
@@ -101,7 +96,7 @@ A proposta visa não apenas testar a sua capacidade técnica e organização de 
 
 ###   Banco de Dados
 
-- **Tipo:** Relacional em memória
+- **Tipo:** Relacional em memória ou Relacional
 - **Exemplo:** SQLite utilizando `':memory:'` como caminho para rodar totalmente em memória.
 
 **Alternativas Aceitas:**
@@ -163,7 +158,7 @@ Os seguintes parâmetros podem ser utilizados para refinar a listagem de produto
 - **`search`** (`string`): busca textual no nome ou descrição do produto.
 - **`minPrice` / `maxPrice`** (`decimal`): filtro por faixa de preço mínima e máxima.
 - **`hasDiscount`** (`boolean`): `true` ou `false` para filtrar produtos com ou sem desconto.
-- **`sortBy`** (`string`): campo para ordenação. Valores possíveis: `name`, `price`, `createdAt`, `stock`.
+- **`sortBy`** (`string`): campo para ordenação. Valores possíveis: `name`, `price`, `created_at`, `stock`.
 - **`sortOrder`** (`string`): direção da ordenação. Pode ser `asc` ou `desc`.
 - **`includeDeleted`** (`boolean`): se `true`, inclui produtos inativos (soft deleted). Recomendado apenas para administradores.
 - **`onlyOutOfStock`** (`boolean`): se `true`, retorna apenas produtos com estoque igual a zero.
@@ -183,7 +178,7 @@ O cadastro de produtos deve ser feito com especial atenção às validações de
 #### Campos obrigatórios
 
 - **`name`** (string, obrigatório)  
-  - Deve ser único após normalização (remover acentos, converter para lowercase, remover espaços duplicados)  
+  - Deve ser único após normalização (remover espaços duplicados)  
   - Mínimo: 3 caracteres  
   - Máximo: 100 caracteres  
   - Regex recomendado: `^[a-zA-Z0-9\s\-_,.]+$`  
@@ -227,13 +222,13 @@ O cadastro de produtos deve ser feito com especial atenção às validações de
 
 - **Cupom promocional:**  
   O sistema deve permitir a aplicação de **cupons promocionais**, que podem ser de dois tipos:  
-  - **Valor fixo** (ex: R$ 50 de desconto)  
-  - **Percentual** (ex: 10%, 25% etc.)
+  - **fixed** (ex: R$ 50 de desconto)  
+  - **percent** (ex: 10%, 25% etc.)
 
   Os cupons devem ser **previamente cadastrados no sistema** e conter:  
   - Um **código único identificador**, como `PROMO10`, `QUERO25`, etc.  
   - Uma regra de validade (data de expiração ou quantidade de usos).  
-  - Um tipo (fixo ou percentual) e valor correspondente.  
+  - Um tipo (fixed ou percent) e valor correspondente.  
   - Aplicação dinâmica no checkout, sem persistência do valor com desconto.
 
   > ⚠️ É responsabilidade do sistema validar se o cupom é válido, aplicável ao produto, e se respeita os limites mínimos de valor final (por exemplo, não permitir que o produto fique abaixo de R$ 0,01).
@@ -275,8 +270,6 @@ O cadastro de produtos deve ser feito com especial atenção às validações de
     - A validade máxima permitida para cupons é de **5 anos** a partir de `valid_from`
 
 #### Regras adicionais
-
-- O **código do cupom** aplicado deve ser armazenado junto ao produto, em um campo específico chamado **`applied_at`**, que registra a **data/hora exata da aplicação** do cupom.
 
 - Cupons **fora da janela de validade** (ou seja, com a data atual anterior a `valid_from` ou posterior a `valid_until`) devem ser **rejeitados com erro `400 Bad Request`**.
 
@@ -347,17 +340,17 @@ Exemplo de Resposta 200
       "name": "Café Premium",
       "description": "100% arábica",
       "stock": 3,
-      "isOutOfStock": false,
+      "is_out_of_stock": false,
       "price": 2590,
       "finalPrice": 2201,
       "discount": {
         "type": "percent",
         "value": 15,
-        "appliedAt": "2025-06-04T18:15:21Z"
+        "applied_at": "2025-06-04T18:15:21Z"
       },
       "hasCouponApplied": true,
-      "createdAt": "2025-05-30T12:00:00Z",
-      "updatedAt": "2025-06-01T09:20:05Z"
+      "created_at": "2025-05-30T12:00:00Z",
+      "updated_at": "2025-06-01T09:20:05Z"
     }
   ],
   "meta": {
@@ -429,8 +422,8 @@ Exemplo de patch:
   "type": "percent",
   "value": 10,
   "oneShot": false,
-  "validFrom": "2025-06-01T00:00:00Z",
-  "validUntil": "2027-06-01T00:00:00Z"
+  "valid_from": "2025-06-01T00:00:00Z",
+  "valid_until": "2027-06-01T00:00:00Z"
 }
 ```
 
@@ -441,7 +434,7 @@ Exemplo de patch:
 - O campo `value` deve respeitar:
   - Para `type = "percent"`: valor entre **1 e 80**.
   - Para `type = "fixed"`: valor **monetário positivo** (maior que 0).
-- O campo `validUntil` deve ser uma data **posterior a `validFrom`** e com no máximo **5 anos de diferença** entre elas.
+- O campo `valid_until` deve ser uma data **posterior a `valid_from`** e com no máximo **5 anos de diferença** entre elas.
 
 ### 2.3 Códigos de erro globais
 
@@ -459,28 +452,35 @@ A modelagem relacional proposta inclui três tabelas principais:
 
 ###   `products` (Produtos)
 
-| Campo         | Tipo     | Descrição                                |
-|---------------|----------|------------------------------------------|
-| `id`          | INTEGER  | Identificador único do produto (PK).     |
-| `name`        | STRING   | Nome do produto.                         |
-| `price`       | INTEGER  | Preço. |
-| `created_at`  | DATETIME | Timestamp de criação (opcional).         |
-| `updated_at`  | DATETIME | Timestamp de atualização (opcional).     |
+| Campo         | Tipo      | Descrição                                          |
+|---------------|-----------|----------------------------------------------------|
+| `id`          | INTEGER   | Identificador único do produto (PK).               |
+| `name`        | STRING    | Nome do produto.                                   |
+| `description` | STRING    | Descrição do produto (opcional, até 300 caracteres). |
+| `price`       | DECIMAL   | Preço original (mínimo 0,01; formato decimal).     |
+| `stock`       | INTEGER   | Quantidade disponível em estoque (0 a 999 999).    |
+| `created_at`  | DATETIME  | Timestamp de criação (não editável).               |
+| `updated_at`  | DATETIME  | Timestamp da última atualização (opcional).        |
+| `deleted_at`  | DATETIME  | Timestamp de inativação soft-delete (opcional).    |
 
 ---
 
-###   `coupons` (Cupons de Desconto)
+###   `coupons` (Cupons de Desconto)
 
-| Campo           | Tipo     | Descrição                                                                 |
-|-----------------|----------|--------------------------------------------------------------------------|
-| `id`            | INTEGER  | Identificador único do cupom (PK).                                      |
-| `code`          | STRING   | Código único do cupom (ex: `"SAVE10"`).                                 |
-| `discount_type` | ENUM     | Tipo de desconto: `"percentual"` ou `"fixo"`.                           |
-| `discount_value`| INTEGER  | Valor do desconto:<br>- Percentual: `10` para 10%<br>- Fixo: valor. |
-| `expiry_date`   | DATE     | Data de expiração do cupom.                                              |
-| `created_at`    | DATETIME | Timestamp de criação (opcional).                                        |
-| `updated_at`    | DATETIME | Timestamp de atualização (opcional).                                    |
-| `status`        | STRING   | Status do cupom (ativo, expirado, etc.) – opcional.                     |
+| Campo          | Tipo      | Descrição                                                                                         |
+|----------------|-----------|---------------------------------------------------------------------------------------------------|
+| `id`           | INTEGER   | Identificador único do cupom (PK).                                                                |
+| `code`         | STRING    | Código único do cupom (ex: `"SAVE10"`). Deve ser normalizado (lowercase, sem acentos ou espaços). |
+| `type`         | ENUM      | Tipo de desconto: `"percent"` ou `"fixed"`.                                                       |
+| `value`        | DECIMAL   | Valor do desconto:<br>- Percentual: `1–80` (para 1% a 80%)<br>- Fixo: valor monetário (> 0).       |
+| `one_shot`     | BOOLEAN   | Se `true`, só pode ser usado uma única vez por produto.                                           |
+| `max_uses`     | INTEGER   | Número máximo de usos permitidos (quando `one_shot = false`).                                      |
+| `uses_count`   | INTEGER   | Contador de quantas vezes o cupom já foi aplicado.                                                |
+| `valid_from`   | DATETIME  | Data/hora em que o cupom se torna válido.                                                         |
+| `valid_until`  | DATETIME  | Data/hora de expiração do cupom (máx. 5 anos após `valid_from`).                                  |
+| `created_at`   | DATETIME  | Timestamp de criação (não editável).                                                              |
+| `updated_at`   | DATETIME  | Timestamp da última atualização (opcional).                                                       |
+| `deleted_at`   | DATETIME  | Timestamp de inativação soft-delete (opcional).                                                   |
 
 ---
 
@@ -490,13 +490,13 @@ Tabela responsável por registrar a **aplicação de um cupom promocional** a um
 Cada produto pode ter **no máximo um cupom aplicado por vez**.  
 Essa estrutura garante o controle transacional da aplicação e remoção de descontos, respeitando a regra de exclusividade.
 
-| Campo         | Tipo       | Descrição                                               |
-|---------------|------------|-----------------------------------------------------------|
-| `id`          | INTEGER    | Identificador único da aplicação (PK).                   |
-| `product_id`  | INTEGER    | Chave estrangeira para `products.id`.                    |
-| `coupon_id`   | INTEGER    | Chave estrangeira para `coupons.id`.                     |
-| `applied_at`  | TIMESTAMP  | Data/hora da aplicação do cupom (ISO UTC).               |
-| `removed_at`  | TIMESTAMP  | Data/hora da remoção do cupom (nulo enquanto ativo).     |
+| Campo          | Tipo      | Descrição                                                         |
+|----------------|-----------|-------------------------------------------------------------------|
+| `id`           | INTEGER   | Identificador único da aplicação (PK).                            |
+| `product_id`   | INTEGER   | Chave estrangeira para `products.id`.                             |
+| `coupon_id`    | INTEGER   | Chave estrangeira para `coupons.id`.                              |
+| `applied_at`   | TIMESTAMP | Data/hora da aplicação do cupom (ISO 8601 UTC).                  |
+| `removed_at`   | TIMESTAMP | Data/hora da remoção do cupom (nulo enquanto ativo).             |
 
 **Regras adicionais:**
 
@@ -558,7 +558,7 @@ sequenceDiagram
   API->>Banco: Verifica se já existe desconto ativo
   Banco-->>API: Nenhum desconto aplicado
 
-  API->>Banco: Valida datas (validFrom/validUntil)
+  API->>Banco: Valida datas (valid_from/valid_until)
   Banco-->>API: Cupom está dentro do período válido
 
   API->>Banco: Aplica cupom e registra applied_at

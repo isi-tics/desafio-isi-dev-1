@@ -690,4 +690,30 @@ O objetivo é também avaliar sua **organização de código**, **clareza técni
 
 ---
 
+## 📦 Como Enviar Sua Entrega
+
+Para padronizarmos o recebimento e garantir que nada se perca no processo, siga as instruções abaixo:
+
+1. **Compactação do Projeto**:
+   - Compacte seu projeto em um arquivo `.zip` contendo todo o código-fonte, incluindo o `README.md`.
+
+2. **Nomeação do Arquivo**:
+   - Nomeie o arquivo com seu nome completo (exemplo: `igor_conde_desafio_fullstack.zip`).
+
+3. **Envio por E-mail**:
+   - **Assunto**: Use o seguinte título padrão:  
+     `[Entrega Desafio Técnico] Nome Completo – Desenvolvedor(a) Fullstack`  
+     Exemplo: `[Entrega Desafio Técnico] Igor Conde – Desenvolvedor Fullstack`
+
+   - **Corpo do E-mail**:
+     - Escreva seu nome completo novamente.
+     - Adicione, se desejar, um breve comentário sobre o envio.
+
+   - **Anexo**: Anexe o arquivo `.zip` ao e-mail.
+
+4. **Destinatário**:
+   - Envie para: `igor.conde@sistemafiepe.org.br`
+
+---
+
 Boa sorte! 🚀
